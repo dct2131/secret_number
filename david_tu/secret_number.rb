@@ -33,27 +33,30 @@ def get_input
   gets.strip
 end
 
-def continue_game(player_guess)
-  secret_number = 8
+secret_number = 8
+puts "#{secret_number} is S.N"
+
+def continue_game(player_guess,secret_number)
+  puts "#{secret_number} is S.N"
   if player_guess == secret_number
     puts "Congratulations, you guessed right!"
-  else wrong_guess(player_guess)
+    exit
+  else 
+    wrong_guess(player_guess, secret_number)
   end
 end
 
-def wrong_guess(player_guess)
-  secret_number = 8
+def wrong_guess(player_guess, secret_number)
   if player_guess < secret_number 
     puts "Try again. Guess a higher number."
   elsif player_guess > secret_number
     puts "Try again. Guess a lower number."
-  else puts "GAME OVER. You should've guessed #{secret_number}!"
   end
 end
     
-def guesses_left
+def guesses_left(guesses)
   i = 1
-  while i != 3 
+  while i < 4 
     puts "#{3 - i}"
     i += 1
   end
@@ -61,13 +64,24 @@ end
 
 puts "Welcome to Secret Number! Created by David Tu."
 puts "Please enter your name."
-player_name = gets.strip.to_i
+player_name = gets.strip
 puts "Hi #{player_name}!"
 puts "Here are the rules #{player_name}: Guess a number between 1 and 10. You have 3 total guesses."
 
 puts "Are you ready #{player_name}? Take your first guess:"
-player_guess = get_input
-continue_game(player_guess)
+
+##loop here 3 times or fewer
+guesses = 0
+
+while guesses < 3
+  puts "you have #{3 - guesses} guess(es) left"
+  player_guess = get_input.strip.to_i  
+  continue_game(player_guess, secret_number)
+  guesses += 1
+end
+
+puts "GAME OVER. You should've guessed #{secret_number}!"
+
 
 
 
